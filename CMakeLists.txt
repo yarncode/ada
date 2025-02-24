@@ -19,6 +19,16 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake)
 
 add_library(ada::ada ALIAS ada)
 
+if(ADA_TESTING)
+  # IMPORTANT!
+  #
+  # We enable std_regex_provider for testing purposes
+  # It is not recommended to enable this flag and use std::regex under
+  # production environments due to several security issues.
+  #
+  target_compile_definitions(ada PUBLIC ADA_USE_UNSAFE_STD_REGEX_PROVIDER=ON)
+endif()
+
 set_target_properties(
   ada PROPERTIES
   VERSION "${ADA_LIB_VERSION}"
